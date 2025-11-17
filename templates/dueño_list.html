@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+    <h1>Lista de Dueños</h1>
+    {% if user.is_staff %}
+    <a href="{% url 'dueño_create' %}" class="btn btn-primary">Registrar Dueño</a>
+    {% endif %}
+  </div>
+
+  <form method="get" class="search-form">
+    <input type="text" name="q" value="{{ q|default:'' }}" placeholder="Buscar por nombre o RUT...">
+    <button type="submit" class="btn">Buscar</button>
+  </form>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>RUT</th>
+        <th>Teléfono</th>
+        <th>Dirección</th>
+        {% if user.is_staff %}
+        <th>Acciones</th>
+        {% endif %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for dueño in page_obj %}
+      <tr>
+        <td>{{ dueño.nombre }}</td>
+        <td>{{ dueño.rut }}</td>
+        <td>{{ dueño.telefono }}</td>
+        <td>{{ dueño.direccion }}</td>
+        {% if user.is_staff %}
+        <td>
+          <a href="{% url 'dueño_edit' dueño.pk %}" class="btn">Editar</a>
+          <a href="{% url 'dueño_delete' dueño.pk %}" class="btn">Eliminar</a>
+        </td>
+        {% endif %}
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="5">No hay dueños registrados.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% include 'paginator.html' %}
+</div>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Veterinaria</title>
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+
+<nav class="navbar">
+  <a class="navbar-logo" href="{% url 'home' %}">Mi Veterinaria</a>
+  <div class="navbar-links">
+    
+    <a href="{% url 'producto_list' %}">Productos</a>
+    <a href="{% url 'veterinario_list' %}">Veterinarios</a>
+
+    {% if user.is_staff %}
+    <a href="{% url 'mascota_list' %}">Mascotas</a>
+    <a href="{% url 'dueño_list' %}">Dueños</a>
+    <a href="{% url 'consulta_list' %}">Consultas</a>
+    {% endif %}
+
+  </div>
+  <div class="navbar-right">
+    {% if user.is_authenticated %}
+      <span class="navbar-user">Hola, {{ user.username }}</span>
+      <form action="{% url 'logout' %}" method="post" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit" class="btn">Salir</button>
+      </form>
+    {% else %}
+      <a href="{% url 'login' %}" class="btn btn-primary">Iniciar Sesión</a>
+    {% endif %}
+  </div>
+</nav>
+
+<main class="main-content">
+  {% block content %}
+  {% endblock %}
+</main>
+
+</body>
+</html>

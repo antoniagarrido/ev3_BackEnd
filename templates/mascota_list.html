@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+    <h1>Lista de Mascotas</h1>
+    {% if user.is_staff %}
+    <a href="{% url 'mascota_create' %}" class="btn btn-primary">Registrar Mascota</a>
+    {% endif %}
+  </div>
+
+  <form method="get" class="search-form">
+    <input type="text" name="q" value="{{ q|default:'' }}" placeholder="Buscar por nombre, especie, raza o dueño...">
+    <button type="submit" class="btn">Buscar</button>
+  </form>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Foto</th>
+        <th>Nombre</th>
+        <th>Especie</th>
+        <th>Raza</th>
+        <th>Dueño</th>
+        {% if user.is_staff %}
+        <th>Acciones</th>
+        {% endif %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for mascota in page_obj %}
+      <tr>
+        <td>
+          {% if mascota.foto_mascota %}
+            <img src="{{ mascota.foto_mascota.url }}" alt="{{ mascota.nombre }}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 50%;">
+          {% else %}
+            <span style="display: inline-block; width: 60px; height: 60px; background: #eee; border-radius: 50%;"></span>
+          {% endif %}
+        </td>
+        <td>{{ mascota.nombre }}</td>
+        <td>{{ mascota.especie }}</td>
+        <td>{{ mascota.raza }}</td>
+        <td>{{ mascota.dueño.nombre }}</td>
+        {% if user.is_staff %}
+        <td>
+          <a href="{% url 'mascota_edit' mascota.pk %}" class="btn">Editar</a>
+          <a href="{% url 'mascota_delete' mascota.pk %}" class="btn">Eliminar</a>
+        </td>
+        {% endif %}
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="6">No hay mascotas registradas.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% include 'paginator.html' %}
+</div>
+{% endblock %}

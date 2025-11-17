@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card">
+  <h1>{{ titulo }}</h1>
+  
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div style="margin-top: 1rem;">
+      <button type="submit" class="btn btn-primary">Guardar</button>
+      <a href="{% url 'consulta_list' %}" class="btn">Cancelar</a>
+    </div>
+  </form>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const fechaInput = document.getElementById('id_fecha');
+
+  if (fechaInput && !fechaInput.value) {
+    const now = new Date();
+    
+    const year = now.getFullYear();
+    const month = (now.getMonth() + 1).toString().padStart(2, '0');
+    const day = now.getDate().toString().padStart(2, '0');
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    
+    const localDateTime = `${year}-${month}-${day}T${hours}:${minutes}`;
+    
+    fechaInput.value = localDateTime;
+  }
+});
+</script>
+
+{% endblock %}

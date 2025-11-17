@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card">
+  <h1>Bienvenido a la Veterinaria</h1>
+  
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <span class="kpi-value">{{ total_mascotas }}</span>
+      <span class="kpi-title">Mascotas Registradas</span>
+    </div>
+    <div class="kpi-card">
+      <span class="kpi-value">{{ total_dueños }}</span>
+      <span class="kpi-title">Dueños</span>
+    </div>
+    <div class="kpi-card">
+      <span class="kpi-value">{{ total_consultas }}</span>
+      <span class="kpi-title">Consultas Realizadas</span>
+    </div>
+  </div>
+</div>
+
+<div class="card" style="margin-top: 2rem;">
+  <h2>Mascotas por Especie</h2>
+  <div style="max-width: 400px; margin: 0 auto;">
+    <canvas id="especieChart"></canvas>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const ctx = document.getElementById('especieChart');
+  const labels = {{ chart_labels|safe }};
+  const data = {{ chart_data|safe }};
+
+  new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Total Mascotas',
+        data: data,
+        backgroundColor: [
+          'rgba(244, 114, 182, 0.7)',
+          'rgba(236, 72, 153, 0.7)',
+          'rgba(219, 39, 119, 0.7)',
+          'rgba(190, 24, 93, 0.7)',
+          'rgba(157, 23, 77, 0.7)'
+        ],
+        borderColor: [
+          'rgba(244, 114, 182, 1)',
+          'rgba(236, 72, 153, 1)',
+          'rgba(219, 39, 119, 1)',
+          'rgba(190, 24, 93, 1)',
+          'rgba(157, 23, 77, 1)'
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'top',
+        }
+      }
+    }
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card">
+  <h1>{{ titulo }}</h1>
+  
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div style="margin-top: 1rem;">
+      <button type="submit" class="btn btn-primary">Guardar</button>
+      <a href="{% url 'mascota_list' %}" class="btn">Cancelar</a>
+    </div>
+  </form>
+</div>
+{% endblock %}
