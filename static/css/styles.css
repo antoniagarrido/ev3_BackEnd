@@ -199,3 +199,97 @@ input:focus, select:focus, textarea:focus {
 .search-form input {
   flex-grow: 1;
 }
+/* ... (tu CSS existente va aquí arriba) ... */
+
+
+/* === PEGA ESTO AL FINAL DE TU ARCHIVO === */
+
+/* --- CSS para la Grilla de Productos --- */
+
+.product-grid {
+  display: grid;
+  /* Crea columnas de 280px, pero se ajusta automáticamente si hay más espacio */
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem; /* Espacio entre las tarjetas */
+  margin-top: 2rem;
+}
+
+.product-card {
+  background: #ffffff;
+  border: 1px solid #FFF1F2; /* Borde rosa pálido como el de .card */
+  border-radius: 12px; /* Esquinas redondeadas */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); /* Sombra suave */
+  overflow: hidden; /* Para que la imagen no se salga */
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-5px); /* Efecto al pasar el mouse */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+}
+
+.product-image-container {
+  width: 100%;
+  padding-top: 100%; /* Esto crea un aspecto cuadrado (1:1) */
+  position: relative;
+  background: #f8f8f8;
+}
+
+.product-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Recorta la imagen para que quepa bien */
+}
+
+.product-image-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #eee; /* El placeholder gris */
+}
+
+.product-info {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; /* Hace que el contenido crezca para rellenar */
+}
+
+.product-name {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.product-price {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #EC4899; /* Color de acento rosa */
+  margin-bottom: 0.5rem;
+}
+
+.product-stock {
+  font-size: 0.9rem;
+  color: #777;
+  margin-bottom: 1rem;
+  margin-top: auto; /* Empuja el stock y botones al fondo */
+}
+
+.product-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.product-actions .btn {
+  /* Hacemos los botones un poco más pequeños */
+  padding: 0.4rem 0.8rem;
+  font-size: 0.9rem;
+}

@@ -273,14 +273,13 @@ def producto_list(request):
 
     return render(request, 'producto_list.html', {'page_obj': page_obj, 'q': q})
 
-# ... (otras vistas) ...
 
 @login_required
 def producto_create(request):
     if not request.user.is_staff:
         return redirect('producto_list')
     if request.method == 'POST':
-        # --- MODIFICA ESTA LÍNEA ---
+       
         form = ProductoForm(request.POST, request.FILES) 
         if form.is_valid():
             form.save()
@@ -304,19 +303,6 @@ def producto_edit(request, pk):
         form = ProductoForm(instance=producto)
     return render(request, 'producto_form.html', {'form': form, 'titulo': 'Editar Producto'})
 
-@login_required
-def producto_edit(request, pk):
-    if not request.user.is_staff:
-        return redirect('producto_list')
-    producto = get_object_or_404(Producto, pk=pk)
-    if request.method == 'POST':
-        form = ProductoForm(request.POST, instance=producto)
-        if form.is_valid():
-            form.save()
-            return redirect('producto_list')
-    else:
-        form = ProductoForm(instance=producto)
-    return render(request, 'producto_form.html', {'form': form, 'titulo': 'Editar Producto'})
 
 @login_required
 def producto_delete(request, pk):

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 14, 2025 at 06:00 AM
+-- Generation Time: Nov 17, 2025 at 05:54 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -35,6 +35,14 @@ CREATE TABLE `antoniaapp_consulta` (
   `mascota_id` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `antoniaapp_consulta`
+--
+
+INSERT INTO `antoniaapp_consulta` (`id`, `fecha`, `motivo`, `diagnostico`, `mascota_id`) VALUES
+(6, '2025-11-14 17:26:00.000000', 'cojea al caminar', 'espina incrustada, antibiotico x 3 dias', 3),
+(7, '2025-11-14 17:27:00.000000', 'no come', 'gastritis perruna', 5);
+
 -- --------------------------------------------------------
 
 --
@@ -56,7 +64,9 @@ CREATE TABLE `antoniaapp_dueño` (
 INSERT INTO `antoniaapp_dueño` (`id`, `nombre`, `rut`, `direccion`, `telefono`) VALUES
 (1, 'Brandon Isaac Beltrán Sepúlveda', '21.934.288-8', 'Los Aromos 0877', '+56 9 2897 4890'),
 (2, 'Joaquín Yulian Hernández Santander', '21.559.202-2', 'Av. Siempre Viva 424', '+56 9 4978 6992'),
-(3, 'Ángelica Antonia Garrido Cancino', '21.233.542-3', 'no me se tu rut y puse cualquier wea 123', '+56 9 8654 3689');
+(3, 'Ángelica Antonia Garrido Cancino', '21.299.855-9', 'av los carrera 883', '+56 9 8654 3689'),
+(4, 'Bryan Arcos', '20686547-1', 'baquedano 170', '+56 9 8674 3699'),
+(5, 'Fabiola Cancino', '15212842-8', 'san martin 890', '+56976347921');
 
 -- --------------------------------------------------------
 
@@ -81,7 +91,39 @@ INSERT INTO `antoniaapp_mascota` (`id`, `nombre`, `especie`, `raza`, `foto_masco
 (2, 'pepito', 'perro', 'nose', 'mascotas/04dfcc1945d2d10406688db28165b085.jpg', 1),
 (3, 'alfredo', 'gato', 'hola', 'mascotas/meu-gato-é-praticamente-o-gato-do-meme-v0-n9dleoj8dgfc1_m5rz4Tl.jpg', 2),
 (4, 'alfonso', 'gato', 'parau', 'mascotas/images.jpg', 2),
-(5, 'Brandon', 'Perro', 'tontito', 'mascotas/depositphotos_26089317-stock-photo-cute-small-dog.jpg', 3);
+(5, 'Choco', 'Perro', 'tontito', 'mascotas/depositphotos_26089317-stock-photo-cute-small-dog.jpg', 3),
+(6, 'nala', 'gato', 'calico', 'mascotas/calico-cat-middle-frame-sitting-260nw-2628882013.webp', 3),
+(7, 'Legolas', 'Perro', 'Pitbull', 'mascotas/caebb9d5dc3130374379076b19016624.jpg', 4),
+(8, 'Mimi', 'Perro', 'American Bully', 'mascotas/puppy-pitbull-american-bully-isolated-600nw-1020441406.webp', 4),
+(9, 'Lucifer', 'Gato', 'Negro', 'mascotas/gato-negro-930x620.jpg', 5),
+(10, 'Lorenzo', 'Ave', 'Loro', 'mascotas/nationalgeographic2300874.webp', 5),
+(11, 'Flash', 'Reptil', 'Tortuga', 'mascotas/M_11320.png', 1),
+(12, 'Marta', 'Reptil', 'Lagarto', 'mascotas/photo-1665243789667-d21cf716ef33.jfif', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `antoniaapp_producto`
+--
+
+CREATE TABLE `antoniaapp_producto` (
+  `id` bigint(20) NOT NULL,
+  `nombre` varchar(150) NOT NULL,
+  `descripcion` longtext DEFAULT NULL,
+  `precio` int(10) UNSIGNED NOT NULL CHECK (`precio` >= 0),
+  `stock` int(10) UNSIGNED NOT NULL CHECK (`stock` >= 0),
+  `imagen` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `antoniaapp_producto`
+--
+
+INSERT INTO `antoniaapp_producto` (`id`, `nombre`, `descripcion`, `precio`, `stock`, `imagen`) VALUES
+(1, 'comida de perro', 'comida de perro master dog, 21k', 15000, 8, 'productos/2000388649943_2.jpg'),
+(2, 'whiskas', 'comida para gatos esterilizados\r\n10k\r\nsabor mix de carne', 10000, 5, 'productos/descarga.jfif'),
+(3, 'Dajana', 'comida para pez\r\n2k', 8000, 10, 'productos/dj7133-alimentos-para-peces-de-estanque-y-agua-fria-de-dajana_empaquetado_1272.jpg'),
+(4, 'Cuerda', 'Juguete para perro', 5000, 15, 'productos/719.webp');
 
 -- --------------------------------------------------------
 
@@ -195,7 +237,11 @@ INSERT INTO `auth_permission` (`id`, `name`, `content_type_id`, `codename`) VALU
 (37, 'Can add veterinario', 10, 'add_veterinario'),
 (38, 'Can change veterinario', 10, 'change_veterinario'),
 (39, 'Can delete veterinario', 10, 'delete_veterinario'),
-(40, 'Can view veterinario', 10, 'view_veterinario');
+(40, 'Can view veterinario', 10, 'view_veterinario'),
+(41, 'Can add producto', 11, 'add_producto'),
+(42, 'Can change producto', 11, 'change_producto'),
+(43, 'Can delete producto', 11, 'delete_producto'),
+(44, 'Can view producto', 11, 'view_producto');
 
 -- --------------------------------------------------------
 
@@ -222,8 +268,11 @@ CREATE TABLE `auth_user` (
 --
 
 INSERT INTO `auth_user` (`id`, `password`, `last_login`, `is_superuser`, `username`, `first_name`, `last_name`, `email`, `is_staff`, `is_active`, `date_joined`) VALUES
-(1, 'pbkdf2_sha256$1000000$QVLSV3sL4ao4kbSTgiC9qg$tUJEqOff4f8vLGQcZ1j7/w76sOHUz0oqOG5eoCuyojE=', '2025-11-14 04:14:57.000000', 0, 'Antonia', '', '', '', 0, 1, '2025-11-14 04:14:49.000000'),
-(2, 'pbkdf2_sha256$1000000$TRDwhTlniW1wPqtUVtqiGq$e7r0UhdM47oHwlamXGqA95kJlSZ0pGdh/lugjnQQvlw=', '2025-11-14 04:26:11.000000', 1, 'admin', '', '', '', 1, 1, '2025-11-14 04:25:55.000000');
+(1, 'pbkdf2_sha256$600000$W4gSfnjJPlY3e4Zs77fbnU$P+OPU2stZQTt5C39r1tH1hAJoY5B5SYxKXBl4VdV4ik=', '2025-11-17 04:37:18.126330', 0, 'Antonia', '', '', '', 0, 1, '2025-11-14 04:14:49.000000'),
+(2, 'pbkdf2_sha256$600000$rydybWLUKmntnxn3PPSYsl$C8r+dVGX7ChwcMbpB88F+8021og6O/LZDS1Y69sbSE8=', '2025-11-17 04:44:52.743640', 1, 'admin', '', '', '', 1, 1, '2025-11-14 04:25:55.000000'),
+(3, 'pbkdf2_sha256$600000$jZNc1a5Qoam13EB67GMCuM$u1CN4zEjz+17Y1nM+uruEbgvxsDhhcDJmOieUGfqTTE=', '2025-11-14 17:24:56.992937', 0, 'anto', '', '', '', 0, 1, '2025-11-14 17:03:39.374351'),
+(4, 'pbkdf2_sha256$600000$NjJP0ap5fl5WQgaHYqdlPM$4yh2ERAXohCCoA1zqLxz/sFFPLAehvYvNbavX9dzJYw=', NULL, 0, 'antogc', '', '', '', 0, 1, '2025-11-14 17:13:04.557533'),
+(5, 'pbkdf2_sha256$600000$8nEN234j49ogsbkLHFzOLo$FOFD7XzKW6XIehUabYjY5zQpRe1a5yyZPGCVv5lQt5k=', '2025-11-17 04:32:17.389043', 0, 'pilar', '', '', '', 0, 1, '2025-11-17 04:32:06.169603');
 
 -- --------------------------------------------------------
 
@@ -287,6 +336,7 @@ INSERT INTO `django_content_type` (`id`, `app_label`, `model`) VALUES
 (8, 'AntoniaApp', 'consulta'),
 (7, 'AntoniaApp', 'dueño'),
 (9, 'AntoniaApp', 'mascota'),
+(11, 'AntoniaApp', 'producto'),
 (10, 'AntoniaApp', 'veterinario'),
 (3, 'auth', 'group'),
 (2, 'auth', 'permission'),
@@ -330,7 +380,9 @@ INSERT INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
 (16, 'auth', '0011_update_proxy_permissions', '2025-11-14 03:29:50.000000'),
 (17, 'auth', '0012_alter_user_first_name_max_length', '2025-11-14 03:29:50.000000'),
 (18, 'sessions', '0001_initial', '2025-11-14 03:29:51.000000'),
-(19, 'AntoniaApp', '0001_initial', '2025-11-14 03:39:30.000000');
+(19, 'AntoniaApp', '0001_initial', '2025-11-14 03:39:30.000000'),
+(20, 'AntoniaApp', '0002_producto', '2025-11-15 02:17:14.710095'),
+(21, 'AntoniaApp', '0003_producto_imagen', '2025-11-17 02:28:33.889369');
 
 -- --------------------------------------------------------
 
@@ -349,7 +401,10 @@ CREATE TABLE `django_session` (
 --
 
 INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES
-('pc6woudg3g8smot4ymiaomxu1nd2151x', '.eJxVjMsOwiAQAP9lz4aAPFp69N5vIMsuSNVAUtqT8d9Nkx70OjOZNwTctxL2ntawMExwhcsvi0jPVA_BD6z3JqjVbV2iOBJx2i7mxul1O9u_QcFeYALDpJTXLrpRe2KjMUvKg8qoBhtHsqzRKpIyGedscl5atoZ9ZqeMNhE-X-ANN6E:1vJlNz:echdf3lgvlKHW8GI3N3iZtqF9QEolYdF6OMEEkldG4Y', '2025-11-28 04:26:11.000000');
+('cxxi90fkfo5acddz2ac76be8pdpih70f', '.eJxVjE0OwiAYBe_C2hDKb3Hp3jOQB3yVqoGktCvj3bVJF7p9M_NeLGBbS9g6LWHO7MwkO_1uEelBdQf5jnprPLW6LnPku8IP2vm1ZXpeDvfvoKCXb60xGIGohYM1yGSNIhFhrdfOUNZSJbjkvIaOTkVQ8lLRiGk0YsCk2PsD5P44Ig:1vKqaG:88Nxhy01fb-oxIcJlnFGQ08EZoPFY1GrkFdsXCZZV7I', '2025-12-01 04:11:20.901365'),
+('pc6woudg3g8smot4ymiaomxu1nd2151x', '.eJxVjMsOwiAQAP9lz4aAPFp69N5vIMsuSNVAUtqT8d9Nkx70OjOZNwTctxL2ntawMExwhcsvi0jPVA_BD6z3JqjVbV2iOBJx2i7mxul1O9u_QcFeYALDpJTXLrpRe2KjMUvKg8qoBhtHsqzRKpIyGedscl5atoZ9ZqeMNhE-X-ANN6E:1vJlNz:echdf3lgvlKHW8GI3N3iZtqF9QEolYdF6OMEEkldG4Y', '2025-11-28 04:26:11.000000'),
+('rllkweg1nv24twk3mfkens9a7tvlwgvg', '.eJxVjDsOwjAQRO_iGlnZxGsMJX3OEO3HxgFkS_lUiLuTSClgynlv5m0GWpc8rHOchlHN1aA5_XZM8oxlB_qgcq9Walmmke2u2IPOtq8aX7fD_TvINOdtHToGdQykHlFJLq2HcxNc8uKSaOhC6zpkBmkSUiRwCEkYwpZmQ-bzBeYvN5c:1vKquX:h8jygxZTWED-t5ZkCENoxfDlpj1LiiNBgQ9Z9xykwnI', '2025-12-01 04:32:17.395344'),
+('v6i7wucch5bwr3qfkcmqp2knxow1wrjw', '.eJxVjE0OwiAYBe_C2hDKb3Hp3jOQB3yVqoGktCvj3bVJF7p9M_NeLGBbS9g6LWHO7MwkO_1uEelBdQf5jnprPLW6LnPku8IP2vm1ZXpeDvfvoKCXb60xGIGohYM1yGSNIhFhrdfOUNZSJbjkvIaOTkVQ8lLRiGk0YsCk2PsD5P44Ig:1vKr6i:fKVHxT46JE3OtxwjXMB_j9BbKQTIimcV1RGaZioHzWE', '2025-12-01 04:44:52.747741');
 
 --
 -- Indexes for dumped tables
@@ -376,6 +431,12 @@ ALTER TABLE `antoniaapp_dueño`
 ALTER TABLE `antoniaapp_mascota`
   ADD PRIMARY KEY (`id`),
   ADD KEY `AntoniaApp_mascota_dueño_id_1b3aee37_fk_AntoniaApp_dueño_id` (`dueño_id`);
+
+--
+-- Indexes for table `antoniaapp_producto`
+--
+ALTER TABLE `antoniaapp_producto`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `antoniaapp_veterinario`
@@ -473,19 +534,25 @@ ALTER TABLE `django_session`
 -- AUTO_INCREMENT for table `antoniaapp_consulta`
 --
 ALTER TABLE `antoniaapp_consulta`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `antoniaapp_dueño`
 --
 ALTER TABLE `antoniaapp_dueño`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `antoniaapp_mascota`
 --
 ALTER TABLE `antoniaapp_mascota`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `antoniaapp_producto`
+--
+ALTER TABLE `antoniaapp_producto`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `antoniaapp_veterinario`
@@ -515,13 +582,13 @@ ALTER TABLE `auth_group_permissions`
 -- AUTO_INCREMENT for table `auth_permission`
 --
 ALTER TABLE `auth_permission`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `auth_user`
 --
 ALTER TABLE `auth_user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `auth_user_groups`
@@ -545,13 +612,13 @@ ALTER TABLE `django_admin_log`
 -- AUTO_INCREMENT for table `django_content_type`
 --
 ALTER TABLE `django_content_type`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `django_migrations`
 --
 ALTER TABLE `django_migrations`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- Constraints for dumped tables
